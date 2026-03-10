@@ -160,11 +160,15 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 .gi:active .gi-ic{opacity:1;}
 
 /* LIGHTBOX */
-#lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:3000;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;}
+#lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:3000;flex-direction:column;align-items:center;justify-content:center;padding:16px;}
 #lb.active{display:flex;}
-#lb img{max-width:95vw;max-height:78vh;border-radius:12px;border:2px solid var(--g1);box-shadow:0 0 40px rgba(200,134,10,.4);object-fit:contain;}
-#lb-close{position:absolute;top:16px;right:16px;background:rgba(245,208,119,.15);border:1px solid rgba(245,208,119,.3);color:var(--g4);font-size:20px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-#lb-dl{padding:10px 24px;background:rgba(245,208,119,.14);border:1px solid var(--g1);border-radius:50px;color:var(--g4);text-decoration:none;font-family:'Lato',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;}
+#lb-img-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%;flex:1;}
+#lb img{max-width:95vw;max-height:82vh;border-radius:10px;border:1.5px solid rgba(245,208,119,.4);box-shadow:0 0 40px rgba(200,134,10,.3);object-fit:contain;cursor:zoom-in;}
+#lb-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);border:1px solid rgba(245,208,119,.3);color:var(--g4);font-size:18px;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
+#lb-footer{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0 4px;width:100%;}
+#lb-dl{padding:8px 20px;background:rgba(245,208,119,.12);border:1px solid rgba(245,208,119,.3);border-radius:50px;color:rgba(255,240,176,.7);text-decoration:none;font-family:'Lato',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;}
+#lb-nav{display:flex;gap:20px;}
+#lb-prev,#lb-next{background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
 /* MODAL */
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;align-items:center;justify-content:center;padding:16px;}
@@ -313,7 +317,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
     <div class="ucd" id="ul-cd"></div>
   </div>
   <div id="ul-open" style="display:none;margin-top:16px;">
-    <a class="bg" href="https://docs.google.com/forms/d/e/1FAIpQLSchP-Mf3N1h1Bkv46l4WoywAV-tiSS7SxIQmtNA3mQNgU1R7A/viewform" target="_blank">
+    <a class="bg" href="https://drive.google.com/drive/folders/1_hjTk5K_CWE_ecU0pHX6FW_OYFpoW7cW?usp=sharing" target="_blank">
       📷 &nbsp; Subir mi foto
     </a>
     <div id="test-banner" style="display:none;margin-top:10px;background:rgba(255,100,0,0.15);border:1px solid rgba(255,150,0,0.3);border-radius:8px;padding:8px 16px;font-size:11px;color:#ffcc88;letter-spacing:2px;">⚙️ MODO PRUEBA ACTIVO</div>
@@ -399,9 +403,17 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
 
 <!-- LIGHTBOX -->
 <div id="lb">
-  <button id="lb-close" onclick="closeLB()">✕</button>
-  <img id="lb-img" src="" alt="Foto de la fiesta">
-  <a id="lb-dl" href="" target="_blank">⬇ Descargar</a>
+  <div id="lb-img-wrap">
+    <button id="lb-close" onclick="closeLB()">✕</button>
+    <img id="lb-img" src="" alt="Foto de la fiesta">
+  </div>
+  <div id="lb-footer">
+    <div id="lb-nav">
+      <button id="lb-prev" onclick="lbNav(-1)">‹</button>
+      <button id="lb-next" onclick="lbNav(1)">›</button>
+    </div>
+    <a id="lb-dl" href="" download target="_blank">⬇ Descargar</a>
+  </div>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
@@ -505,9 +517,17 @@ function checkUnlock(){
   const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),
         m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
   document.getElementById('ul-cd').textContent='🦋 Disponible en: '+
-    (d>0?`${d}d ${h}h ${m}m`:h>0?`${h}h ${m}m ${s}s`:`${m}m ${s}s`);
+    (d>0?`${d}d ${h}h ${m}m ${s}s`:h>0?`${h}h ${m}m ${s}s`:`${m}m ${s}s`);
 }
 checkUnlock();setInterval(checkUnlock,1000);
+
+// ===== ENTER KEY ON PIN =====
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(document.getElementById('gal-modal').classList.contains('active')&&
+       document.getElementById('gpin-wrap').style.display!=='none') checkGPin();
+  }
+});
 
 // ===== SECRET TEST MODE: tocar 5 veces el emoji de camara =====
 let tapCount=0,tapTimer=null;
@@ -549,13 +569,14 @@ async function loadGallery(gridId,emptyId,type='guests'){
     grid.innerHTML='';
     if(!data.images||!data.images.length){empty.style.display='block';return;}
     empty.style.display='none';
-    data.images.forEach(img=>{
+    const imgs=data.images;
+    imgs.forEach((img,idx)=>{
       const div=document.createElement('div');div.className='gi';
       const el=document.createElement('img');el.src=img.thumb;el.alt='Foto';el.loading='lazy';
       const ov=document.createElement('div');ov.className='gi-ov';
       const ic=document.createElement('span');ic.className='gi-ic';ic.textContent='🔍';
       ov.appendChild(ic);div.appendChild(el);div.appendChild(ov);
-      div.onclick=()=>openLB(img.url);
+      div.onclick=()=>openLB(img.url,imgs.map(i=>i.url),idx);
       grid.appendChild(div);
     });
   }catch(e){
@@ -571,18 +592,36 @@ async function openOfficialModal(){
 }
 
 // ===== LIGHTBOX =====
-function openLB(url){
-  document.getElementById('lb-img').src=url;
-  document.getElementById('lb-dl').href=url;
+let lbImages=[],lbIdx=0;
+function openLB(url,images,idx){
+  lbImages=images||[url];lbIdx=idx||0;
+  document.getElementById('lb-img').src=lbImages[lbIdx];
+  document.getElementById('lb-dl').href=lbImages[lbIdx];
   document.getElementById('lb').classList.add('active');
   document.body.style.overflow='hidden';
+  document.getElementById('lb-prev').style.display=lbImages.length>1?'flex':'none';
+  document.getElementById('lb-next').style.display=lbImages.length>1?'flex':'none';
+}
+function lbNav(dir){
+  lbIdx=(lbIdx+dir+lbImages.length)%lbImages.length;
+  document.getElementById('lb-img').src=lbImages[lbIdx];
+  document.getElementById('lb-dl').href=lbImages[lbIdx];
 }
 function closeLB(){
   document.getElementById('lb').classList.remove('active');
   document.getElementById('lb-img').src='';
   document.body.style.overflow='';
 }
-document.getElementById('lb').addEventListener('click',e=>{if(e.target===document.getElementById('lb'))closeLB();});
+document.getElementById('lb').addEventListener('click',e=>{
+  if(e.target===document.getElementById('lb')||e.target===document.getElementById('lb-img-wrap'))closeLB();
+});
+// Swipe support
+let lbTx=0;
+document.getElementById('lb').addEventListener('touchstart',e=>{lbTx=e.touches[0].clientX;},{passive:true});
+document.getElementById('lb').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-lbTx;
+  if(Math.abs(dx)>50)lbNav(dx<0?1:-1);
+});
 
 // ===== PIN =====
 function np(el,nid){if(el.value&&nid)document.getElementById(nid).focus();}
