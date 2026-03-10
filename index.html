@@ -7,13 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --g1:#F5D077;--g2:#C8860A;--g3:#E8B830;--g4:#FFF0B0;--g5:#7A4F00;
+  --g1:#F5D077;--g2:#D4920F;--g3:#F0C835;--g4:#FFF0B0;--g5:#7A4F00;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
 body{
   font-family:'Lato',sans-serif;color:var(--g4);overflow-x:hidden;
-  background:radial-gradient(ellipse at 50% 0%,#704000 0%,#3d1e00 40%,#180c00 100%);
+  background:radial-gradient(ellipse at 50% 0%,#7a4800 0%,#3d2000 40%,#1a0e00 100%);
   min-height:100vh;
 }
 body::before{
@@ -45,16 +45,16 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 
 /* HERO */
 #hero{min-height:100vh;justify-content:center;text-align:center;padding:40px 16px;}
-.hp{font-size:clamp(10px,2.8vw,13px);letter-spacing:6px;text-transform:uppercase;color:var(--g1);opacity:0;animation:fu .9s .2s forwards;margin-bottom:10px;}
+.hp{font-size:clamp(13px,3.5vw,16px);letter-spacing:6px;text-transform:uppercase;color:var(--g1);opacity:0;animation:fu .9s .2s forwards;margin-bottom:10px;}
 
 .hn{
   font-family:'Great Vibes',cursive;
-  font-size:clamp(60px,17vw,170px);
+  font-size:clamp(82px,24vw,220px);
   line-height:1.2;
   padding:0 32px;
   width:100%;
   overflow:visible;
-  background:linear-gradient(135deg,#C8860A 0%,#FFF0B0 30%,#F5D077 50%,#FFF0B0 70%,#C8860A 100%);
+  background:linear-gradient(135deg,#D4920F 0%,#FFF5C0 30%,#F8DC88 50%,#FFF5C0 70%,#D4920F 100%);
   background-size:300% 300%;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   filter:drop-shadow(0 4px 24px rgba(200,134,10,.65));
@@ -62,9 +62,9 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 }
 @keyframes ns{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-.hx{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,4.5vw,32px);font-weight:300;letter-spacing:10px;text-transform:uppercase;color:var(--g4);margin-top:4px;opacity:0;animation:fu .9s .8s forwards;}
+.hx{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,6.5vw,42px);font-weight:300;letter-spacing:10px;text-transform:uppercase;color:var(--g4);margin-top:4px;opacity:0;animation:fu .9s .8s forwards;}
 .hb{font-size:clamp(18px,4.5vw,26px);letter-spacing:12px;margin:18px 0;opacity:0;animation:fu .9s 1s forwards;}
-.hq{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,3.8vw,19px);font-style:italic;line-height:1.9;color:rgba(255,240,176,.88);max-width:580px;margin:0 auto;padding:0 8px;opacity:0;animation:fu .9s 1.2s forwards;}
+.hq{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.8vw,23px);font-style:italic;line-height:1.9;color:rgba(255,240,176,.88);max-width:580px;margin:0 auto;padding:0 8px;opacity:0;animation:fu .9s 1.2s forwards;}
 .hs{margin-top:44px;opacity:0;animation:fu .9s 1.8s forwards;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--g1);}
 .ha{display:block;font-size:18px;margin-top:8px;animation:bo 2s infinite;}
 @keyframes bo{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
@@ -84,14 +84,14 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 .cg{position:absolute;top:-50px;left:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,235,100,.1) 0%,transparent 70%);pointer-events:none;}
 
 .si{font-size:38px;margin-bottom:10px;display:block;filter:drop-shadow(0 2px 8px rgba(200,134,10,.5));}
-.sl{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--g1);margin-bottom:6px;}
+.sl{font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--g1);margin-bottom:6px;}
 .st{
-  font-family:'Playfair Display',serif;font-size:clamp(28px,7.5vw,44px);font-style:italic;
+  font-family:'Playfair Display',serif;font-size:clamp(32px,9vw,48px);font-style:italic;
   background:linear-gradient(135deg,#C8860A,#FFF0B0,#E8B830);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   margin-bottom:20px;filter:drop-shadow(0 2px 10px rgba(200,134,10,.35));
 }
-.sx{font-family:'Cormorant Garamond',serif;font-size:clamp(19px,5.2vw,24px);line-height:1.9;color:rgba(255,240,176,.92);}
+.sx{font-family:'Cormorant Garamond',serif;font-size:clamp(21px,6vw,27px);line-height:1.9;color:rgba(255,240,176,.92);}
 .dv{width:130px;height:1px;margin:16px auto;background:linear-gradient(90deg,transparent,var(--g1),transparent);}
 .orn{color:var(--g1);font-size:16px;letter-spacing:10px;margin:12px 0;display:block;}
 
@@ -150,7 +150,7 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 .wa:active{transform:translateY(-2px);}
 
 /* GALLERY GRID */
-.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:18px;}
+.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:18px;transform:none!important;animation:none!important;}
 .gi{aspect-ratio:1;border-radius:10px;overflow:hidden;border:2px solid rgba(245,208,119,.18);cursor:pointer;position:relative;}
 .gi:active{transform:scale(.97);}
 .gi img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -173,7 +173,7 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 #lb-prev,#lb-next{background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
 /* MODAL */
-.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;align-items:center;justify-content:center;padding:16px;}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;align-items:center;justify-content:center;padding:16px;transform:none!important;}
 .mo.active{display:flex;}
 .mb{background:linear-gradient(145deg,rgba(80,42,0,.98),rgba(45,24,0,.98));border:1px solid rgba(245,208,119,.32);border-radius:24px;padding:36px 22px;max-width:440px;width:100%;text-align:center;box-shadow:0 0 70px rgba(0,0,0,.8);position:relative;max-height:92vh;overflow-y:auto;}
 .mc{position:absolute;top:12px;right:12px;background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -205,7 +205,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
 .rev.vis{opacity:1;transform:translateY(0);}
 
 @media(max-width:400px){
-  .hn{font-size:clamp(52px,15vw,140px);padding:0 24px;}
+  .hn{font-size:clamp(70px,21vw,180px);padding:0 20px;}
   .cdw{gap:6px;}
   .cds{display:none;}
   .pr{gap:5px;}
@@ -225,7 +225,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <h1 class="hn">Alma</h1>
   <p class="hx">Mis &nbsp;·&nbsp; XV &nbsp;·&nbsp; Años</p>
   <div class="hb">🦋 &nbsp; 🦋 &nbsp; 🦋</div>
-  <p class="hq">"Hay momentos inolvidables que se atesoran en el corazón para siempre.<br>Por esta razón, quiero que compartas conmigo esta noche tan especial para mí."</p>
+  <p class="hq">"Hay momentos inolvidables que se atesoran<br>en el corazón para siempre.<br>Por esta razón, quiero que compartas conmigo<br>esta noche tan especial para mí."</p>
   <div class="hs">Deslizá para descubrir<span class="ha">🦋</span></div>
 </section>
 
@@ -316,7 +316,11 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <p class="sl">¡Compartí el momento!</p>
   <h2 class="st">Tu Foto en la Fiesta</h2>
   <div class="dv"></div>
-  <p class="sx">Capturá los momentos más divertidos y subí tu foto.</p>
+  <p class="sx" style="font-style:italic;line-height:2;">
+    Tu foto no puede faltar en esta hermosa galería.<br>
+    <span style="font-size:clamp(17px,4.5vw,21px);color:var(--g1);">Sumemos fuerzas y creemos un recuerdo que perdurará de por vida.</span><br>
+    <span style="font-size:clamp(16px,4vw,19px);color:rgba(255,240,176,.7);">Nuestra mirada y diversión · Gracias Alma por invitarnos a ser parte. 🦋</span>
+  </p>
   <div class="ulock" id="ul-lock">
     <p>📸 Esta función se habilita la noche de la fiesta</p>
     <div class="ucd" id="ul-cd"></div>
@@ -370,7 +374,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <p class="sx">Por favor confirmá tu asistencia antes del</p>
   <div class="rd">📅 &nbsp; 10 de Abril de 2026</div>
   <p class="sx">Escribinos por WhatsApp 💛</p>
-  <a class="wa" href="https://wa.me/543764180397?text=¡Hola!%20Quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Alma%20🎉🦋" target="_blank">
+  <a class="wa" href="https://wa.me/543764180397?text=Vengo%20de%20la%20tarjeta%20de%2015%20años%20de%20Alma%2C%20quería%20confirmar%20mi%20asistencia%20🎉🦋" target="_blank">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     ¡Confirmar asistencia!
   </a>
@@ -383,7 +387,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <p class="fy">MIS XV AÑOS &nbsp;·&nbsp; 2026</p>
   <div class="dv" style="margin-top:20px;"></div>
   <div class="fc">
-    <p class="fc-cr">Fotografía & Diseño · Estudio Tomauno</p>
+    <p class="fc-cr">Diseñado por Javier Móttola ®</p>
     <div class="fc-btns">
       <a class="fc-btn fc-ig" href="https://www.instagram.com/tomaunomodels" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -507,9 +511,15 @@ class Spark{
 const bflies=Array.from({length:22},()=>new Butterfly(true));
 const sparks=Array.from({length:30},()=>new Spark(true));
 function animate(){
-  ctx.clearRect(0,0,W,H);
-  sparks.forEach(s=>{s.update();s.draw();});
-  bflies.forEach(b=>{b.update();b.draw();});
+  // Pause canvas when modal/lightbox open to save resources
+  const modalOpen = document.getElementById('lb').classList.contains('active') ||
+    document.getElementById('gal-modal').classList.contains('active') ||
+    document.getElementById('official-modal').classList.contains('active');
+  if(!modalOpen){
+    ctx.clearRect(0,0,W,H);
+    sparks.forEach(s=>{s.update();s.draw();});
+    bflies.forEach(b=>{b.update();b.draw();});
+  }
   requestAnimationFrame(animate);
 }
 animate();
