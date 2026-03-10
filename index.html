@@ -291,7 +291,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
 <!-- SUBIR FOTOS -->
 <section><div class="card rev">
   <div class="cg"></div>
-  <span class="si">🤳</span>
+  <span class="si" id="upload-si">🤳</span>
   <p class="sl">¡Compartí el momento!</p>
   <h2 class="st">Tu Foto en la Fiesta</h2>
   <div class="dv"></div>
@@ -304,7 +304,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
     <a class="bg" href="https://docs.google.com/forms/d/e/1FAIpQLSchP-Mf3N1h1Bkv46l4WoywAV-tiSS7SxIQmtNA3mQNgU1R7A/viewform" target="_blank">
       📷 &nbsp; Subir mi foto
     </a>
-  </div>
+    <div id="test-banner" style="display:none;margin-top:10px;background:rgba(255,100,0,0.15);border:1px solid rgba(255,150,0,0.3);border-radius:8px;padding:8px 16px;font-size:11px;color:#ffcc88;letter-spacing:2px;">⚙️ MODO PRUEBA ACTIVO</div>
 </div></section>
 
 <!-- GALERÍA -->
@@ -462,7 +462,15 @@ function updateCD(){
 updateCD();setInterval(updateCD,1000);
 
 // ===== UPLOAD UNLOCK — 19hs 25/04/2026 =====
+let testMode=false;
+function enableTestMode(){
+  testMode=true;
+  document.getElementById('ul-lock').style.display='none';
+  document.getElementById('ul-open').style.display='block';
+  document.getElementById('test-banner').style.display='block';
+}
 function checkUnlock(){
+  if(testMode)return;
   const unlock=new Date('2026-04-25T19:00:00-03:00');
   const now=new Date();
   if(now>=unlock){
@@ -477,6 +485,14 @@ function checkUnlock(){
     (d>0?`${d}d ${h}h ${m}m`:h>0?`${h}h ${m}m ${s}s`:`${m}m ${s}s`);
 }
 checkUnlock();setInterval(checkUnlock,1000);
+
+// ===== SECRET TEST MODE: tocar 5 veces el emoji de camara =====
+let tapCount=0,tapTimer=null;
+document.getElementById('upload-si').addEventListener('click',function(){
+  tapCount++;clearTimeout(tapTimer);
+  tapTimer=setTimeout(()=>{tapCount=0;},2000);
+  if(tapCount>=5){tapCount=0;const code=prompt('🔐');if(code==='test2026')enableTestMode();}
+});
 
 // ===== SCROLL REVEAL =====
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:0.08});
