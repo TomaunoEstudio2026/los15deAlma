@@ -150,7 +150,7 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 .wa:active{transform:translateY(-2px);}
 
 /* GALLERY GRID */
-.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:18px;transform:none!important;animation:none!important;}
+.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:18px;transform:translateZ(0);will-change:auto;isolation:isolate;}
 .gi{aspect-ratio:1;border-radius:10px;overflow:hidden;border:2px solid rgba(245,208,119,.18);cursor:pointer;position:relative;}
 .gi:active{transform:scale(.97);}
 .gi img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -175,7 +175,7 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 /* MODAL */
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;align-items:center;justify-content:center;padding:16px;transform:none!important;}
 .mo.active{display:flex;}
-.mb{background:linear-gradient(145deg,rgba(80,42,0,.98),rgba(45,24,0,.98));border:1px solid rgba(245,208,119,.32);border-radius:24px;padding:36px 22px;max-width:440px;width:100%;text-align:center;box-shadow:0 0 70px rgba(0,0,0,.8);position:relative;max-height:92vh;overflow-y:auto;}
+.mb{background:linear-gradient(145deg,rgba(80,42,0,.98),rgba(45,24,0,.98));border:1px solid rgba(245,208,119,.32);border-radius:24px;padding:36px 22px;max-width:440px;width:100%;text-align:center;box-shadow:0 0 70px rgba(0,0,0,.8);position:relative;max-height:92vh;overflow-y:auto;transform:translateZ(0);isolation:isolate;}
 .mc{position:absolute;top:12px;right:12px;background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .mt{font-family:'Great Vibes',cursive;font-size:30px;color:var(--g4);margin-bottom:6px;}
 .ms{font-size:10px;letter-spacing:4px;color:var(--g1);text-transform:uppercase;margin-bottom:16px;}
@@ -217,7 +217,6 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
 
 <canvas id="cvs"></canvas>
 <div id="yt-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;"></div>
-<button id="mbtn" onclick="toggleMusic()">🎵</button>
 
 <!-- HERO -->
 <section id="hero">
@@ -227,6 +226,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <div class="hb">🦋 &nbsp; 🦋 &nbsp; 🦋</div>
   <p class="hq">"Hay momentos inolvidables que se atesoran<br>en el corazón para siempre.<br>Por esta razón, quiero que compartas conmigo<br>esta noche tan especial para mí."</p>
   <div class="hs">Deslizá para descubrir<span class="ha">🦋</span></div>
+  <button id="mbtn" onclick="toggleMusic()">🎵</button>
 </section>
 
 <!-- CUÁNDO -->
@@ -721,7 +721,7 @@ async function openOfficialModal(){
 // ===== LIGHTBOX =====
 let lbImages=[],lbIdx=0;
 function openLB(url,images,idx){
-  document.getElementById('cvs').style.opacity='0';
+  canvasActive=false;ctx.clearRect(0,0,W,H);document.getElementById('cvs').style.opacity='0';
   lbImages=images||[url];lbIdx=idx||0;
   document.getElementById('lb-img').src=lbImages[lbIdx];
   document.getElementById('lb-dl').href=lbImages[lbIdx];
