@@ -288,6 +288,18 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <span class="orn" style="margin-top:20px;">🦋 &nbsp; 🦋 &nbsp; 🦋</span>
 </div></section>
 
+<!-- FOTOS FOTÓGRAFO -->
+<section><div class="card rev">
+  <div class="cg"></div>
+  <span class="si">📷</span>
+  <p class="sl">Recuerdos oficiales</p>
+  <h2 class="st">Las Fotos</h2>
+  <div class="dv"></div>
+  <p class="sx">Las fotos oficiales de la noche estarán disponibles aquí.<br>
+  <span style="font-size:14px;color:var(--g1);letter-spacing:1px;">¡Pronto disponibles! 🦋</span></p>
+  <button class="bo" onclick="openOfficialModal()" style="margin-top:18px;">📸 &nbsp; Ver fotos de la noche</button>
+</div></section>
+
 <!-- SUBIR FOTOS -->
 <section><div class="card rev">
   <div class="cg"></div>
@@ -371,6 +383,17 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
       <div class="gg" id="modal-grid"></div>
       <p id="modal-empty" style="color:var(--g1);font-family:'Cormorant Garamond',serif;font-size:17px;margin-top:16px;display:none;">Todavía no hay fotos. ¡Volvé mañana! 🦋</p>
     </div>
+  </div>
+</div>
+
+<!-- OFFICIAL GALLERY MODAL -->
+<div class="mo" id="official-modal">
+  <div class="mb" style="max-width:520px;">
+    <button class="mc" onclick="closeModal('official-modal')">✕</button>
+    <div class="mt" style="margin-bottom:8px;">📷 Fotos de la Noche</div>
+    <p style="font-size:11px;color:var(--g1);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Tocá una foto para agrandarla</p>
+    <div class="gg" id="official-grid"></div>
+    <p id="official-empty" style="color:var(--g1);font-family:'Cormorant Garamond',serif;font-size:17px;margin-top:16px;display:none;">Las fotos estarán disponibles pronto 🦋</p>
   </div>
 </div>
 
@@ -515,13 +538,13 @@ function toggleMusic(){
 }
 
 // ===== GALLERY (Apps Script) =====
-const SCRIPT='https://script.google.com/macros/s/AKfycbx0lqckU6HcsXg8MdTllUfOZOqKngP1LXXcEOOkj0XvJTI-MD8B5xqmQv1B80Jic6_K/exec';
+const SCRIPT='https://script.google.com/macros/s/AKfycbwMmfoUQc9V8EipC1PI8CoLOYhLLAFGlGxqZp7_r-eVv5cq0TBdzvjcOqlyshOiJVaD/exec';
 
-async function loadGallery(gridId,emptyId){
+async function loadGallery(gridId,emptyId,type='guests'){
   const grid=document.getElementById(gridId),empty=document.getElementById(emptyId);
   grid.innerHTML='<p style="color:var(--g1);font-family:Cormorant Garamond,serif;font-size:16px;padding:20px;grid-column:1/-1;text-align:center;">Cargando fotos... 🦋</p>';
   try{
-    const res=await fetch(SCRIPT+'?cb='+Date.now());
+    const res=await fetch(SCRIPT+'?type='+type+'&cb='+Date.now());
     const data=await res.json();
     grid.innerHTML='';
     if(!data.images||!data.images.length){empty.style.display='block';return;}
@@ -538,6 +561,13 @@ async function loadGallery(gridId,emptyId){
   }catch(e){
     grid.innerHTML='<p style="color:var(--g1);font-family:Cormorant Garamond,serif;font-size:16px;padding:20px;grid-column:1/-1;text-align:center;">Las fotos estarán disponibles pronto 🦋</p>';
   }
+}
+
+// ===== OFFICIAL GALLERY =====
+async function openOfficialModal(){
+  document.getElementById('official-modal').classList.add('active');
+  document.body.style.overflow='hidden';
+  await loadGallery('official-grid','official-empty','official');
 }
 
 // ===== LIGHTBOX =====
