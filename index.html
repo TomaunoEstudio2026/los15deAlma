@@ -23,7 +23,7 @@ body::before{
     radial-gradient(ellipse at 80% 70%,rgba(232,184,48,.10) 0%,transparent 55%),
     radial-gradient(ellipse at 50% 50%,rgba(255,235,150,.06) 0%,transparent 70%);
 }
-#cvs{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+#cvs{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .3s;}
 
 /* MUSIC */
 #mbtn{
@@ -33,9 +33,9 @@ body::before{
   border:2px solid rgba(255,235,150,.55);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   font-size:20px;box-shadow:0 4px 18px rgba(200,134,10,.55);
-  transition:transform .3s;animation:mbp 2.5s infinite;-webkit-appearance:none;
+  -webkit-appearance:none;
 }
-#mbtn:active{transform:scale(1.1);}
+#mbtn:active{opacity:.85;}
 @keyframes mbp{
   0%,100%{box-shadow:0 4px 18px rgba(200,134,10,.55),0 0 0 0 rgba(245,208,119,.3);}
   50%{box-shadow:0 4px 26px rgba(200,134,10,.7),0 0 0 12px rgba(245,208,119,0);}
@@ -62,7 +62,7 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 }
 @keyframes ns{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-.hx{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,6.5vw,42px);font-weight:300;letter-spacing:10px;text-transform:uppercase;color:var(--g4);margin-top:4px;opacity:0;animation:fu .9s .8s forwards;}
+.hx{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,6vw,42px);font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--g4);margin-top:4px;opacity:0;animation:fu .9s .8s forwards;white-space:nowrap;}
 .hb{font-size:clamp(18px,4.5vw,26px);letter-spacing:12px;margin:18px 0;opacity:0;animation:fu .9s 1s forwards;}
 .hq{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.8vw,23px);font-style:italic;line-height:1.9;color:rgba(255,240,176,.88);max-width:580px;margin:0 auto;padding:0 8px;opacity:0;animation:fu .9s 1.2s forwards;}
 .hs{margin-top:44px;opacity:0;animation:fu .9s 1.8s forwards;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--g1);}
@@ -188,12 +188,12 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 
 /* FOOTER */
 footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;border-top:1px solid rgba(245,208,119,.1);}
-.fn{font-family:'Great Vibes',cursive;font-size:52px;background:linear-gradient(135deg,#C8860A,#FFF0B0,#E8B830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.fn{font-family:'Great Vibes',cursive;font-size:80px;background:linear-gradient(135deg,#D4920F,#FFF5C0,#F0C835);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .fh{font-size:20px;display:block;margin:10px 0;animation:hb 1.6s infinite;}
 @keyframes hb{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 .fy{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--g1);letter-spacing:5px;}
 .fc{margin-top:24px;}
-.fc-cr{font-size:11px;color:rgba(245,208,119,.35);letter-spacing:1px;margin-bottom:16px;}
+.fc-cr{font-size:14px;color:rgba(245,208,119,.6);letter-spacing:1px;margin-bottom:16px;font-family:'Cormorant Garamond',serif;}
 .fc-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
 .fc-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:50px;text-decoration:none;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;transition:transform .25s;box-shadow:0 4px 14px rgba(0,0,0,.3);}
 .fc-btn:active{transform:scale(.97);}
@@ -316,10 +316,9 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
   <p class="sl">¡Compartí el momento!</p>
   <h2 class="st">Tu Foto en la Fiesta</h2>
   <div class="dv"></div>
-  <p class="sx" style="font-style:italic;line-height:2;">
-    Tu foto no puede faltar en esta hermosa galería.<br>
-    <span style="font-size:clamp(17px,4.5vw,21px);color:var(--g1);">Sumemos fuerzas y creemos un recuerdo que perdurará de por vida.</span><br>
-    <span style="font-size:clamp(16px,4vw,19px);color:rgba(255,240,176,.7);">Nuestra mirada y diversión · Gracias Alma por invitarnos a ser parte. 🦋</span>
+  <p class="sx" style="line-height:2.1;">
+    Tu foto no puede faltar en esta hermosa galería fotográfica.<br>
+    <span style="color:var(--g1);font-style:italic;">Sumemos fuerzas y juntos haremos que este recuerdo sea inolvidable!! 🦋</span>
   </p>
   <div class="ulock" id="ul-lock">
     <p>📸 Esta función se habilita la noche de la fiesta</p>
@@ -511,7 +510,6 @@ class Spark{
 const bflies=Array.from({length:22},()=>new Butterfly(true));
 const sparks=Array.from({length:30},()=>new Spark(true));
 function animate(){
-  // Pause canvas when modal/lightbox open to save resources
   const modalOpen = document.getElementById('lb').classList.contains('active') ||
     document.getElementById('gal-modal').classList.contains('active') ||
     document.getElementById('official-modal').classList.contains('active');
@@ -519,6 +517,8 @@ function animate(){
     ctx.clearRect(0,0,W,H);
     sparks.forEach(s=>{s.update();s.draw();});
     bflies.forEach(b=>{b.update();b.draw();});
+  } else {
+    ctx.clearRect(0,0,W,H); // clear canvas when modal open
   }
   requestAnimationFrame(animate);
 }
@@ -713,6 +713,7 @@ async function loadGallery(gridId,emptyId,type='guests'){
 // ===== OFFICIAL GALLERY =====
 async function openOfficialModal(){
   document.getElementById('official-modal').classList.add('active');
+  document.getElementById('cvs').style.display='none';
   document.body.style.overflow='hidden';
   await loadGallery('official-grid','official-empty','official');
 }
@@ -720,10 +721,12 @@ async function openOfficialModal(){
 // ===== LIGHTBOX =====
 let lbImages=[],lbIdx=0;
 function openLB(url,images,idx){
+  document.getElementById('cvs').style.opacity='0';
   lbImages=images||[url];lbIdx=idx||0;
   document.getElementById('lb-img').src=lbImages[lbIdx];
   document.getElementById('lb-dl').href=lbImages[lbIdx];
   document.getElementById('lb').classList.add('active');
+  document.getElementById('cvs').style.display='none';
   document.body.style.overflow='hidden';
   document.getElementById('lb-prev').style.display=lbImages.length>1?'flex':'none';
   document.getElementById('lb-next').style.display=lbImages.length>1?'flex':'none';
@@ -736,6 +739,7 @@ function lbNav(dir){
 function closeLB(){
   document.getElementById('lb').classList.remove('active');
   document.getElementById('lb-img').src='';
+  document.getElementById('cvs').style.display='block';
   document.body.style.overflow='';
 }
 document.getElementById('lb').addEventListener('click',e=>{
@@ -759,11 +763,13 @@ function openGalModal(){
   document.getElementById('gal-modal').classList.add('active');
   document.getElementById('gpin-wrap').style.display='none';
   document.getElementById('gal-modal-inner').style.display='block';
+  document.getElementById('cvs').style.display='none';
   document.body.style.overflow='hidden';
   loadGallery('modal-grid','modal-empty');
 }
 function closeModal(id){
   document.getElementById(id).classList.remove('active');
+  document.getElementById('cvs').style.display='block';
   document.body.style.overflow='';
 }
 document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id);}));
