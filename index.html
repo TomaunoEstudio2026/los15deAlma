@@ -173,9 +173,9 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 #lb-prev,#lb-next{background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
 /* MODAL */
-.mo{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:2000;align-items:center;justify-content:center;padding:16px;overscroll-behavior:contain;}
+.mo{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.97);z-index:2000;align-items:center;justify-content:center;padding:16px;overscroll-behavior:contain;touch-action:pan-y;}
 .mo.active{display:flex;}
-.mb{background:linear-gradient(145deg,rgba(80,42,0,.98),rgba(45,24,0,.98));border:1px solid rgba(245,208,119,.32);border-radius:24px;padding:36px 22px;max-width:480px;width:100%;text-align:center;box-shadow:0 0 70px rgba(0,0,0,.8);position:relative;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.mb{background:linear-gradient(145deg,rgba(80,42,0,.98),rgba(45,24,0,.98));border:1px solid rgba(245,208,119,.32);border-radius:24px;padding:36px 22px;max-width:480px;width:100%;text-align:center;box-shadow:0 0 70px rgba(0,0,0,.8);position:relative;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;transform:none!important;will-change:auto;}
 .mc{position:absolute;top:12px;right:12px;background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .mt{font-family:'Great Vibes',cursive;font-size:30px;color:var(--g4);margin-bottom:6px;}
 .ms{font-size:10px;letter-spacing:4px;color:var(--g1);text-transform:uppercase;margin-bottom:16px;}
@@ -419,7 +419,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
       <button class="mbtn" onclick="checkGPin()">Ver fotos ✨</button>
     </div>
     <div id="gal-modal-inner" style="display:none;">
-      <div class="mt" style="margin-bottom:8px;">📱 Fotos de los Chicos</div>
+      <div class="mt" style="margin-bottom:8px;">📱 Fotos de los Chicos <span id="count-modal-grid" style="font-size:12px;color:rgba(245,208,119,.5);font-family:Lato,sans-serif;font-weight:300;margin-left:6px;"></span></div>
       <p style="font-size:11px;color:var(--g1);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Tocá una foto para agrandarla</p>
       <div class="gg" id="modal-grid"></div>
       <p id="modal-empty" style="color:var(--g1);font-family:'Cormorant Garamond',serif;font-size:17px;margin-top:16px;display:none;">Todavía no hay fotos. ¡Volvé mañana! 🦋</p>
@@ -431,7 +431,7 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
 <div class="mo" id="official-modal">
   <div class="mb" style="max-width:520px;">
     <button class="mc" onclick="closeModal('official-modal')">✕</button>
-    <div class="mt" style="margin-bottom:8px;">📷 Fotos de la Noche</div>
+    <div class="mt" style="margin-bottom:8px;">📷 Fotos Oficiales <span id="count-official-grid" style="font-size:12px;color:rgba(245,208,119,.5);font-family:Lato,sans-serif;font-weight:300;margin-left:6px;"></span></div>
     <p style="font-size:11px;color:var(--g1);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Tocá una foto para agrandarla</p>
     <div class="gg" id="official-grid"></div>
     <p id="official-empty" style="color:var(--g1);font-family:'Cormorant Garamond',serif;font-size:17px;margin-top:16px;display:none;">Las fotos estarán disponibles pronto 🦋</p>
@@ -509,18 +509,21 @@ class Spark{
 }
 const bflies=Array.from({length:22},()=>new Butterfly(true));
 const sparks=Array.from({length:30},()=>new Spark(true));
+let animFrameId=null;
 function animate(){
-  const modalOpen = document.getElementById('lb').classList.contains('active') ||
-    document.getElementById('gal-modal').classList.contains('active') ||
-    document.getElementById('official-modal').classList.contains('active');
-  if(!modalOpen){
-    ctx.clearRect(0,0,W,H);
-    sparks.forEach(s=>{s.update();s.draw();});
-    bflies.forEach(b=>{b.update();b.draw();});
-  } else {
-    ctx.clearRect(0,0,W,H); // clear canvas when modal open
-  }
-  requestAnimationFrame(animate);
+  ctx.clearRect(0,0,W,H);
+  sparks.forEach(s=>{s.update();s.draw();});
+  bflies.forEach(b=>{b.update();b.draw();});
+  animFrameId=requestAnimationFrame(animate);
+}
+function stopCanvas(){
+  if(animFrameId){cancelAnimationFrame(animFrameId);animFrameId=null;}
+  ctx.clearRect(0,0,W,H);
+  document.getElementById('cvs').style.visibility='hidden';
+}
+function startCanvas(){
+  document.getElementById('cvs').style.visibility='visible';
+  if(!animFrameId)animate();
 }
 animate();
 
@@ -596,23 +599,32 @@ function handleFoto(input) {
 async function enviarFoto() {
   if (!fotoBase64) return;
   const btn = document.getElementById('foto-send');
-  btn.textContent = '⏳ Enviando...';
+  const sizeKB = Math.round(fotoBase64.length * 0.75 / 1024);
+  btn.textContent = '⏳ Enviando' + (sizeKB > 2000 ? ' (foto grande, aguantá un momento...)' : '...');
   btn.disabled = true;
+  document.getElementById('foto-err').style.display = 'none';
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(()=>controller.abort(), 60000); // 60s timeout
     const res = await fetch(SCRIPT, {
       method: 'POST',
-      body: JSON.stringify({ action: 'uploadFoto', base64: fotoBase64 })
+      body: JSON.stringify({ action: 'uploadFoto', base64: fotoBase64 }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
     const data = await res.json();
     if (data.ok) {
       document.getElementById('foto-preview').style.display = 'none';
       document.getElementById('foto-ok').style.display = 'block';
       fotoBase64 = null;
       document.getElementById('foto-input').value = '';
+      document.getElementById('foto-gallery').value = '';
     } else {
-      throw new Error(data.error || 'Error');
+      throw new Error(data.error || 'Error del servidor');
     }
   } catch(e) {
+    const msg = e.name === 'AbortError' ? 'La conexión tardó mucho. Intentá con WiFi 📶' : 'No se pudo enviar. Intentá de nuevo.';
+    document.getElementById('foto-err').innerHTML = '❌ ' + msg;
     document.getElementById('foto-err').style.display = 'block';
     btn.textContent = '✨ Confirmar y enviar';
     btn.disabled = false;
@@ -674,34 +686,106 @@ function toggleMusic(){
 // ===== GALLERY (Apps Script) =====
 const SCRIPT='https://script.google.com/macros/s/AKfycbw7LcrsQ9TmUzYpxPrj_twb53sYnRO-E9M8iIrLQmJ98z9lSjsqBYNHBnV70cBydIt0Fg/exec';
 
-async function loadGallery(gridId,emptyId,type='guests'){
-  const grid=document.getElementById(gridId),empty=document.getElementById(emptyId);
-  grid.innerHTML='<p style="color:var(--g1);font-family:Cormorant Garamond,serif;font-size:16px;padding:20px;grid-column:1/-1;text-align:center;">Cargando fotos... 🦋</p>';
-  try{
-    const res=await fetch(SCRIPT+'?type='+type+'&cb='+Date.now());
-    const data=await res.json();
-    grid.innerHTML='';
-    if(!data.images||!data.images.length){empty.style.display='block';return;}
-    empty.style.display='none';
-    const imgs=data.images;
-    imgs.forEach((img,idx)=>{
-      const div=document.createElement('div');div.className='gi';
-      const el=document.createElement('img');el.src=img.thumb;el.alt='Foto';el.loading='lazy';
-      const ov=document.createElement('div');ov.className='gi-ov';
-      const ic=document.createElement('span');ic.className='gi-ic';ic.textContent='🔍';
-      ov.appendChild(ic);div.appendChild(el);div.appendChild(ov);
-      div.onclick=()=>openLB(img.url,imgs.map(i=>i.url),idx);
-      grid.appendChild(div);
-    });
-  }catch(e){
-    grid.innerHTML='<p style="color:var(--g1);font-family:Cormorant Garamond,serif;font-size:16px;padding:20px;grid-column:1/-1;text-align:center;">Las fotos estarán disponibles pronto 🦋</p>';
+const PAGE_SIZE = 48;
+const galState = {};
+
+async function loadGallery(gridId, emptyId, type='guests'){
+  const grid = document.getElementById(gridId);
+  const empty = document.getElementById(emptyId);
+
+  // Init state
+  if(!galState[gridId]) galState[gridId] = {allImgs:[], page:0, loaded:false};
+  const state = galState[gridId];
+
+  // First load - fetch all URLs from script
+  if(!state.loaded){
+    grid.innerHTML='<p style="color:var(--g1);font-family:Cormorant Garamond,serif;font-size:16px;padding:20px;grid-column:1/-1;text-align:center;">Cargando fotos... 🦋</p>';
+    try{
+      const res = await fetch(SCRIPT+'?type='+type+'&cb='+Date.now());
+      const data = await res.json();
+      if(!data.images||!data.images.length){
+        grid.innerHTML='';
+        empty.style.display='block';
+        return;
+      }
+      state.allImgs = data.images;
+      state.loaded = true;
+      state.page = 0;
+      grid.innerHTML='';
+      empty.style.display='none';
+    }catch(e){
+      grid.innerHTML='<p style="color:var(--g1);font-family:Cormorant Garamond,serif;font-size:16px;padding:20px;grid-column:1/-1;text-align:center;">Las fotos estarán disponibles pronto 🦋</p>';
+      return;
+    }
+  }
+
+  // Remove old "Ver más" button if exists
+  const oldBtn = document.getElementById('load-more-'+gridId);
+  if(oldBtn) oldBtn.remove();
+
+  // Render current page
+  const start = state.page * PAGE_SIZE;
+  const slice = state.allImgs.slice(start, start + PAGE_SIZE);
+  const allUrls = state.allImgs.map(i=>i.url);
+
+  // Count badge
+  const badge = document.getElementById('count-'+gridId);
+  if(badge) badge.textContent = state.allImgs.length + ' fotos';
+
+  slice.forEach((img, i) => {
+    const idx = start + i;
+    const div = document.createElement('div'); div.className='gi';
+    const el = document.createElement('img');
+    el.alt='Foto'; el.loading='lazy';
+    // Lazy src swap via IntersectionObserver
+    el.dataset.src = img.thumb;
+    el.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    el.style.background='rgba(245,208,119,.08)';
+    const ov = document.createElement('div'); ov.className='gi-ov';
+    const ic = document.createElement('span'); ic.className='gi-ic'; ic.textContent='🔍';
+    ov.appendChild(ic); div.appendChild(el); div.appendChild(ov);
+    div.onclick=()=>openLB(img.url, allUrls, idx);
+    grid.appendChild(div);
+  });
+
+  // Setup IntersectionObserver for lazy loading images
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const img=e.target;
+          if(img.dataset.src){img.src=img.dataset.src;delete img.dataset.src;}
+          obs.unobserve(img);
+        }
+      });
+    },{rootMargin:'100px'});
+    grid.querySelectorAll('img[data-src]').forEach(img=>obs.observe(img));
+  } else {
+    // Fallback: load all
+    grid.querySelectorAll('img[data-src]').forEach(img=>{img.src=img.dataset.src;delete img.dataset.src;});
+  }
+
+  // "Ver más" button if more pages
+  const total = state.allImgs.length;
+  const shown = Math.min((state.page+1)*PAGE_SIZE, total);
+  if(shown < total){
+    const wrap = document.createElement('div');
+    wrap.id = 'load-more-'+gridId;
+    wrap.style.cssText='grid-column:1/-1;text-align:center;padding:16px 0;';
+    const btn = document.createElement('button');
+    btn.className='bo';
+    btn.style.cssText='font-size:13px;padding:10px 28px;';
+    btn.textContent='Ver más fotos (' + shown + ' de ' + total + ')';
+    btn.onclick=()=>{state.page++;loadGallery(gridId,emptyId,type);};
+    wrap.appendChild(btn);
+    grid.appendChild(wrap);
   }
 }
 
 // ===== OFFICIAL GALLERY =====
 async function openOfficialModal(){
+  stopCanvas();
   document.getElementById('official-modal').classList.add('active');
-  document.getElementById('cvs').style.display='none';
   document.body.style.overflow='hidden';
   await loadGallery('official-grid','official-empty','official');
 }
@@ -725,9 +809,9 @@ function lbNav(dir){
   document.getElementById('lb-dl').href=lbImages[lbIdx];
 }
 function closeLB(){
+  startCanvas();
   document.getElementById('lb').classList.remove('active');
   document.getElementById('lb-img').src='';
-  document.getElementById('cvs').style.display='block';
   document.body.style.overflow='';
 }
 document.getElementById('lb').addEventListener('click',e=>{
@@ -748,17 +832,20 @@ function getPin(ids){return ids.map(id=>document.getElementById(id).value).join(
 
 // ===== GALLERY MODAL =====
 function openGalModal(){
+  stopCanvas();
   document.getElementById('gal-modal').classList.add('active');
   document.getElementById('gpin-wrap').style.display='none';
   document.getElementById('gal-modal-inner').style.display='block';
-  document.getElementById('cvs').style.display='none';
   document.body.style.overflow='hidden';
   loadGallery('modal-grid','modal-empty');
 }
 function closeModal(id){
+  startCanvas();
   document.getElementById(id).classList.remove('active');
-  document.getElementById('cvs').style.display='block';
   document.body.style.overflow='';
+  // Reset gallery state so next open re-checks for new photos
+  if(id==='gal-modal') delete galState['modal-grid'];
+  if(id==='official-modal') delete galState['official-grid'];
 }
 document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id);}));
 </script>
