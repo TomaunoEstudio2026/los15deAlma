@@ -659,15 +659,15 @@ document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
 let ytp,playing=false;
 function onYouTubeIframeAPIReady(){
   ytp=new YT.Player('yt-player',{
-    videoId:'W5guhMw_EH0',
-    playerVars:{autoplay:0,controls:0,start:57,loop:1,playlist:'W5guhMw_EH0'},
+    videoId:'d020hcWA_Wg',
+    playerVars:{autoplay:0,controls:0,start:5,loop:1,playlist:'d020hcWA_Wg'},
     events:{onReady:function(){}}
   });
 }
 function toggleMusic(){
   if(!ytp||typeof ytp.playVideo!=='function')return;
   const btn=document.getElementById('mbtn');
-  if(!playing){ytp.seekTo(57,true);ytp.playVideo();btn.textContent='🔊';playing=true;}
+  if(!playing){ytp.seekTo(5,true);ytp.playVideo();btn.textContent='🔊';playing=true;}
   else{ytp.pauseVideo();btn.textContent='🎵';playing=false;}
 }
 
