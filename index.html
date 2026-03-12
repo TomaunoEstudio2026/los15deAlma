@@ -151,26 +151,26 @@ section{position:relative;z-index:1;width:100%;display:flex;flex-direction:colum
 
 /* GALLERY GRID */
 .gg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:18px;transform:translateZ(0);will-change:auto;isolation:isolate;}
-.gi{aspect-ratio:1;border-radius:10px;overflow:hidden;border:2px solid rgba(245,208,119,.18);cursor:pointer;position:relative;}
-.gi:active{transform:scale(.97);}
+.gi{aspect-ratio:1;border-radius:10px;overflow:hidden;border:2px solid rgba(245,208,119,.18);cursor:pointer;position:relative;transform:none!important;transition:none!important;}
+.gi:active{opacity:.85;}
 .gi img{width:100%;height:100%;object-fit:cover;display:block;}
-.gi-ov{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .25s;display:flex;align-items:center;justify-content:center;}
-.gi:active .gi-ov{background:rgba(0,0,0,.3);}
-.gi-ic{font-size:24px;opacity:0;transition:opacity .25s;}
-.gi:active .gi-ic{opacity:1;}
+.gi-ov{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;}
+
+.gi-ic{font-size:24px;opacity:0;}
+
 
 /* LIGHTBOX */
-#lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:3000;flex-direction:column;align-items:center;justify-content:center;padding:16px;}
+#lb{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:3000;flex-direction:column;align-items:center;justify-content:center;padding:16px;overscroll-behavior:none;touch-action:none;isolation:isolate;}
 #lb.active{display:flex;}
 #lb-img-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%;flex:1;}
 #lb img{max-width:95vw;max-height:82vh;border-radius:10px;border:1.5px solid rgba(245,208,119,.4);box-shadow:0 0 40px rgba(200,134,10,.3);object-fit:contain;cursor:zoom-in;}
 #lb-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);border:1px solid rgba(245,208,119,.3);color:var(--g4);font-size:18px;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
-#lb-footer{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0 4px;width:100%;}
+#lb-footer{display:flex;align-items:center;justify-content:center;gap:20px;padding:12px 0 4px;width:100%;}
 #lb-dl{padding:8px 20px;background:rgba(245,208,119,.12);border:1px solid rgba(245,208,119,.3);border-radius:50px;color:rgba(255,240,176,.7);text-decoration:none;font-family:'Lato',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;}
 #lb-ig{font-size:11px;color:rgba(245,208,119,.4);text-decoration:none;letter-spacing:1px;font-family:'Lato',sans-serif;transition:color .3s;padding-bottom:4px;}
 #lb-ig:active{color:var(--g1);}
-#lb-nav{display:flex;gap:20px;}
-#lb-prev,#lb-next{background:rgba(245,208,119,.1);border:1px solid rgba(245,208,119,.25);color:var(--g1);font-size:18px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+#lb-prev,#lb-next{background:rgba(245,208,119,.15);border:1px solid rgba(245,208,119,.35);color:var(--g1);font-size:22px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
 
 /* MODAL */
 .mo{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.97);z-index:2000;align-items:center;justify-content:center;padding:16px;overscroll-behavior:contain;touch-action:pan-y;}
@@ -441,18 +441,16 @@ footer{position:relative;z-index:1;text-align:center;padding:52px 16px 32px;bord
 
 <!-- LIGHTBOX -->
 <div id="lb">
+  <button id="lb-close" onclick="closeLB()" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,.7);border:1px solid rgba(245,208,119,.4);color:#FFF0B0;font-size:20px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;-webkit-tap-highlight-color:transparent;">✕</button>
+  <button id="lb-prev" onclick="lbNav(-1)" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);z-index:10;">‹</button>
+  <button id="lb-next" onclick="lbNav(1)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:10;">›</button>
   <div id="lb-img-wrap">
-    <button id="lb-close" onclick="closeLB()">✕</button>
     <img id="lb-img" src="" alt="Foto de la fiesta">
   </div>
   <div id="lb-footer">
-    <div id="lb-nav">
-      <button id="lb-prev" onclick="lbNav(-1)">‹</button>
-      <button id="lb-next" onclick="lbNav(1)">›</button>
-    </div>
     <a id="lb-dl" href="" target="_blank">⤢ Ver completa</a>
+    <a id="lb-ig" href="https://www.instagram.com/tomaunomodels" target="_blank">📸 @tomaunomodels</a>
   </div>
-  <a id="lb-ig" href="https://www.instagram.com/tomaunomodels" target="_blank">📸 @tomaunomodels</a>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
